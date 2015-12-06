@@ -39,7 +39,7 @@ public class LRUCache {
 
     public void print() {
         System.out.println("===== My LRU Cache =====");
-        //System.out.println("| " + String.join(" | ", cache.keySet()) + " | ");
+        System.out.println("| " + String.join(" | ", cache.keySet()) + " | ");
         System.out.println("========================");
     }
 
