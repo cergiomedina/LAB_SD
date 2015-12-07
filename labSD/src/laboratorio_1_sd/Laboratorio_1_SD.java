@@ -1,12 +1,46 @@
 
 package laboratorio_1_sd;
+import java.io.*;
+import java.net.*;
+
 
 public class Laboratorio_1_SD {
+    
+    final static String HOST = "localhost";
+    final static int PUERTO=5000;
+    
 
     public static void main(String[] args) {
+        Socket sc;
+         DataOutputStream mensaje;
+        DataInputStream entrada;
+
+        
         int total_hits = 0, total_miss = 0;
-        LRUCache lru_cache = new LRUCache(5);
         String my_queries[] = {"query 2", "query 6", "query 5", "query 2", "query 3", "query 6", "query 6", "query 12", "query 15", "query 19", "query 10", "query 15"};
+        
+        System.out.println("Consulta: "+my_queries[0]);
+        
+        try {
+            sc = new Socket( HOST , PUERTO );
+            mensaje = new DataOutputStream(sc.getOutputStream());
+            mensaje.writeUTF(my_queries[0]);
+            sc.close();
+            
+        } catch (Exception e) {
+            System.out.println("Error: "+e.getMessage());
+
+        }
+        
+        /*String  result = lru_cache.getEntryFromCache(my_queries[0]);
+        
+        if (result == null) { // MISS
+                System.out.println("MISS :(");
+                result = FrontService.getEntry(my_queries[0]);
+                lru_cache.addEntryToCache(my_queries[0], result);
+        }else{
+            System.out.println("HIT !");
+        }
         for (int i = 0; i < my_queries.length; i++) {
             System.out.println("Query: '" + my_queries[i] + "'");
             String result = lru_cache.getEntryFromCache(my_queries[i]);
@@ -29,6 +63,7 @@ public class Laboratorio_1_SD {
         float percentage_miss = (100 * total_miss) / total;
         System.out.println("Total queries: " + total);
         System.out.println("Hits: " + total_hits + " ("+ percentage_hits +"%)");
-        System.out.println("Miss: " + total_miss + " ("+ percentage_miss +"%)");
+        System.out.println("Miss: " + total_miss + " ("+ percentage_miss +"%)");*/
     }
+    
 }
