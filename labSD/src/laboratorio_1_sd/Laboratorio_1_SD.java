@@ -22,9 +22,21 @@ public class Laboratorio_1_SD {
         System.out.println("Consulta: "+my_queries[0]);
         
         try {
+            
+            // ME CONECTO Y  ENVIO LA CONSULTA
             sc = new Socket( HOST , PUERTO );
             mensaje = new DataOutputStream(sc.getOutputStream());
             mensaje.writeUTF(my_queries[0]);
+
+            // FALTA RECIBIR LO QUE ME ENVIA EL CACHE 
+              
+            //entrada = new DataInputStream(sc.getInputStream());
+            
+            //InputStream aux = sc.getInputStream();
+            //DataInputStream flujo = new DataInputStream( aux );
+            //System.out.println( "Respuesta a cliente: "+flujo.readUTF() );
+            
+            // CIERRA CONECCION
             sc.close();
             
         } catch (Exception e) {

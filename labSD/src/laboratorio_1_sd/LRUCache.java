@@ -85,25 +85,39 @@ public class LRUCache extends Thread {
         final int PUERTO=5000;
         ServerSocket sc;
         Socket so;
-        DataOutputStream salida;
+        //DataOutputStream salida;
         BufferedReader entrada;
         String mensajeRecibido;
         try {
             sc = new ServerSocket(PUERTO);
             so = new Socket();
+            
+            //COMIENZA A  ESCUCHAR
+            boolean bandera = true;
+            //while(bandera){ // debe estar siempre escuchando, por eso el ciclo
             System.out.println("Cache esperando pregunta...");
-            so = sc.accept();
+            so = sc.accept(); // SE CONECTA
             entrada = new BufferedReader(new InputStreamReader(so.getInputStream()));
-            salida = new DataOutputStream(so.getOutputStream());
+           // salida = new DataOutputStream(so.getOutputStream());
             mensajeRecibido = entrada.readLine();
-            salida.writeUTF(mensajeRecibido);
+            // RECIBE LA CONSULTA
             System.out.println("CACHE RECIBIO COMO PREGUNTA: "+mensajeRecibido);
             String resultado = null;
             
-            resultado = busquedaEnCache(mensajeRecibido);
+            resultado = busquedaEnCache(mensajeRecibido); // BUSCO SI ESTA EN LA PARTICION CORRESPONDIENTE EN EL CACHE
+            
+            // MUESTRO EL RESULTADO DE LA CONSULTA POR PARTE DEL CLIENTE, ACA EN EL SERVIDOR
 
             System.out.println("EL RESULTADO DE LA BUSQUEDA ES: "+resultado);
+           
+               // FALTA QUE ENVIE LA RESPUESTA AL CLIENTE Y QUE EL CLIENTE LE GUARDE LA RESPUESTA
+               // CORRECTA EN CASO DE QUE NO ESTE AQUI, PASANDO OBVIAMENTE POR EL FRONT SERVICE 
             
+            //OutputStream aux = so.getOutputStream();
+            //DataOutputStream flujo= new DataOutputStream( aux );
+            //flujo.writeUTF(resultado);
+            //salida.writeUTF(resultado);
+            //}
 
             sc.close();
             
@@ -124,6 +138,8 @@ public class LRUCache extends Thread {
     }
     
     public void addEntryToCache(String query, String answer) {
+        
+        
         if (cache.containsKey(query)) { // HIT
             // Bring to front
             cache.remove(query);
